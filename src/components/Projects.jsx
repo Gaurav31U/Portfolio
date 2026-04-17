@@ -1,62 +1,63 @@
 import React from 'react';
-import { ExternalLink, Code } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { ExternalLink } from 'lucide-react';
 
 const Projects = () => {
   const projects = [
     {
-      title: "ArtStock - E-commerce Web App",
-      guide: "Guided by Dr. Amrita Chaturvedi, IIT (BHU)",
-      desc: "Developed a full-stack Django e-commerce platform for art with separate artist/customer authentication and dashboards, featuring faceted search, order management, and tracking.",
-      tech: ["Django", "Python", "HTML/CSS", "SQLite"],
-      link: "#"
+      title: "Equal Microserver",
+      desc: "Built scalable backend infrastructure including PII encryption with hashed lookups & database-backed concurrency control.",
+      tag: "Internship Project",
+      span: "span-2"
     },
     {
-      title: "MockTest - Android Application",
-      guide: "Guided by Dr. Sukomal Pal, IIT (BHU)",
-      desc: "Built a native, offline-first Android app for JEE aspirants using Kotlin. Features Firebase-backed real-time leaderboards, Google OAuth, Coroutines, and high-fidelity LaTeX rendering for complex formulas.",
-      tech: ["Kotlin", "Android SDK", "Firebase"],
-      link: "#"
+      title: "ArtStock Platform",
+      desc: "Django e-commerce platform for art with separate artist/customer authentication and faceted search.",
+      tag: "Django",
+      span: ""
     },
     {
-      title: "WaterWays - Web Application",
-      guide: "Guided by Dr. Ravindranath Chowdary C, IIT (BHU)",
-      desc: "Built a Spring Boot-based cruise booking web app using MVVM architecture, featuring secure ACID-compliant transactions, tour search, and on-cruise amenity booking with MySQL.",
-      tech: ["Java", "Spring Boot", "MySQL", "Thymeleaf"],
-      link: "#"
+      title: "MockTest Android App",
+      desc: "Native offline-first app for JEE aspirants using Kotlin. Built with Firebase and Coroutines.",
+      tag: "Kotlin",
+      span: ""
     },
     {
-      title: "Scratch C++ Builds & Android Apps",
-      guide: "Self Project",
-      desc: "Built From Scratch Using C++: HTTP Server, Git, BitTorrent, SQLite and DNS Server. Built Simple Android Apps Using Kotlin: Social Media, News Feed, MemeShare and Notes.",
-      tech: ["C++", "Kotlin"],
-      link: "#"
+      title: "WaterWays Booking",
+      desc: "Spring Boot-based cruise booking web app using MVVM architecture with secure ACID-compliant transactions.",
+      tag: "Spring Boot",
+      span: "span-2"
     }
   ];
 
   return (
     <section id="projects" className="section">
-      <h2 className="section-title">Featured <span className="text-gradient">Projects</span></h2>
-      <div className="projects-grid">
+      <motion.div initial={{ opacity: 0, y: 50 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
+        <h2 className="section-title">03 — <span className="text-gradient">Selected Projects</span></h2>
+      </motion.div>
+      
+      <div className="bento-grid">
         {projects.map((proj, i) => (
-          <div key={i} className="glass project-card">
-            <div className="project-content">
-              <h3 className="project-title">{proj.title}</h3>
-              <div className="project-guide">{proj.guide}</div>
-              <p className="project-desc">{proj.desc}</p>
-              
-              <div className="skill-list" style={{ marginTop: 'auto' }}>
-                {proj.tech.map((t, j) => (
-                  <span key={j} className="skill-tag" style={{ padding: '4px 10px', fontSize: '0.75rem' }}>{t}</span>
-                ))}
-              </div>
-              
-              <div className="project-links">
-                <a href={proj.link} target="_blank" rel="noopener noreferrer">
-                  <ExternalLink size={18} /> View Project
-                </a>
-              </div>
+          <motion.div 
+            key={i} 
+            className={`bento-item glass ${proj.span}`}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: i * 0.1 }}
+          >
+            <div style={{ marginBottom: 'auto' }}>
+              <span style={{ fontSize: '0.8rem', color: 'var(--accent-cyan)', background: 'rgba(0, 255, 255, 0.1)', padding: '4px 12px', borderRadius: '20px', display: 'inline-block', marginBottom: '15px' }}>
+                {proj.tag}
+              </span>
+              <h3 style={{ fontSize: '1.6rem', fontFamily: 'var(--font-heading)', marginBottom: '15px' }}>{proj.title}</h3>
+              <p style={{ color: 'var(--text-secondary)' }}>{proj.desc}</p>
             </div>
-          </div>
+            
+            <a href="#" className="glow-icon-btn" style={{ marginTop: '20px', alignSelf: 'flex-start' }}>
+              <ExternalLink size={20} />
+            </a>
+          </motion.div>
         ))}
       </div>
     </section>

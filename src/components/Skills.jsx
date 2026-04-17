@@ -1,44 +1,43 @@
 import React from 'react';
-import { Code2, Database, Globe, Wrench } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 const Skills = () => {
-  const skillCategories = [
-    {
-      title: "Languages",
-      icon: <Code2 size={32} />,
-      skills: ["C++", "Python", "Java", "Kotlin", "JavaScript", "Ruby", "C"]
-    },
-    {
-      title: "Databases",
-      icon: <Database size={32} />,
-      skills: ["MySQL", "MongoDB", "Cloud Firestore", "SQLite", "Oracle"]
-    },
-    {
-      title: "Web Frameworks",
-      icon: <Globe size={32} />,
-      skills: ["Spring Boot", "Django", "Ruby on Rails", "Node.js", "React"]
-    },
-    {
-      title: "DevOps & Tools",
-      icon: <Wrench size={32} />,
-      skills: ["Docker", "Git", "CI/CD", "Kafka", "Postman", "Android SDK", "GitHub Actions"]
-    }
+  const skills = [
+    { name: "C++", cat: "Languages" },
+    { name: "JS/Node", cat: "Languages" },
+    { name: "Python", cat: "Languages" },
+    { name: "Java/Kotlin", cat: "Languages" },
+    { name: "Ruby", cat: "Languages" },
+    { name: "React", cat: "Frontend" },
+    { name: "Django", cat: "Backend" },
+    { name: "Spring Boot", cat: "Backend" },
+    { name: "Rails", cat: "Backend" },
+    { name: "MySQL", cat: "Database" },
+    { name: "MongoDB", cat: "Database" },
+    { name: "Docker", cat: "DevOps" },
+    { name: "Git", cat: "DevOps" }
   ];
 
   return (
     <section id="skills" className="section">
-      <h2 className="section-title">Technical <span className="text-gradient">Skills</span></h2>
-      <div className="skills-grid">
-        {skillCategories.map((cat, i) => (
-          <div key={i} className="glass skill-category">
-            <div className="skill-icon">{cat.icon}</div>
-            <h3>{cat.title}</h3>
-            <div className="skill-list">
-              {cat.skills.map((skill, j) => (
-                <span key={j} className="skill-tag">{skill}</span>
-              ))}
-            </div>
-          </div>
+      <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
+        <h2 className="section-title">02 — <span className="text-gradient">THE ENGINEERING CORE</span></h2>
+      </motion.div>
+      
+      <div className="skills-container">
+        {skills.map((skill, i) => (
+          <motion.div 
+            key={i} 
+            className="skill-badge"
+            initial={{ opacity: 0, scale: 0.8 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: i * 0.05 }}
+          >
+            <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: 'var(--accent-cyan)' }}></div>
+            <span style={{ color: '#fff' }}>{skill.name}</span>
+            <span style={{ color: 'var(--text-secondary)', fontSize: '0.75rem', marginLeft: '5px' }}>{skill.cat}</span>
+          </motion.div>
         ))}
       </div>
     </section>

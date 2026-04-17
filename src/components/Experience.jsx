@@ -1,53 +1,51 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 
 const Experience = () => {
   const experiences = [
     {
-      role: "Software Engineer Intern (Finshare Microserver)",
+      role: "Software Engineer Intern (Microservices)",
       company: "Equal",
       date: "July 2025 – Jan 2026",
-      details: [
-        "Built scalable backend infrastructure including PII encryption with hashed lookups.",
-        "Created database-backed semaphore concurrency control for consent creation that reduced failures by 15 percent.",
-        "Centralized microservice logging that reduced storage by 50 percent and CPU usage by 10 percent.",
-        "Led major data platform initiatives by executing a full MySQL to Oracle migration with complete data integrity, minimal downtime, and production grade reliability."
-      ]
+      desc: "Built scalable backend infrastructure including PII encryption with hashed lookups, database backed semaphore concurrency control for consent creation that reduced failures by 15%, and centralized microservice logging."
     },
     {
       role: "Product Development Intern",
       company: "10XR",
-      location: "Remote",
       date: "June 2024 – July 2024",
-      details: [
-        "Developed a Ruby on Rails backend 'Store Service' with 100+ REST APIs, implementing JWT auth, RBAC, Cloudflare image uploads, and event-driven components using Kafka and OpenLoyalty (Hyperledger Fabric).",
-        "Built a full CI/CD pipeline with GitHub Actions for Rubocop linting, Brakeman security scans, Docker image builds, Azure deployment, and documented APIs using Swagger/OpenAPI.",
-        "Technologies: Ruby, Ruby on Rails, MongoDB, Git, Docker."
-      ]
+      desc: "Developed a Ruby on Rails backend with 100+ REST APIs, implementing JWT auth, RBAC, Kafka events, OpenCV. Built full GitHub Actions CI/CD."
     }
   ];
 
   return (
     <section id="experience" className="section">
-      <h2 className="section-title">Professional <span className="text-gradient">Experience</span></h2>
-      <div className="timeline">
+      <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
+        <h2 className="section-title">04 — <span className="text-gradient">EXPERIENCE</span></h2>
+      </motion.div>
+      
+      <div className="exp-grid">
         {experiences.map((exp, i) => (
-          <div key={i} className="timeline-item">
-            <div className="timeline-dot"></div>
-            <div className="glass experience-card">
-              <div className="exp-header">
-                <div>
-                  <h3 className="exp-title">{exp.role}</h3>
-                  <div className="exp-company">{exp.company}</div>
-                </div>
-                <div className="exp-date">{exp.date}</div>
+          <motion.div 
+            key={i} 
+            className="exp-card glass"
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: i * 0.2 }}
+          >
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '10px' }}>
+              <div>
+                <h3 style={{ fontSize: '1.4rem', fontFamily: 'var(--font-heading)' }}>{exp.role}</h3>
+                <div style={{ color: 'var(--accent-purple)', fontWeight: 'bold', marginTop: '5px' }}>{exp.company}</div>
               </div>
-              <ul className="exp-list">
-                {exp.details.map((point, j) => (
-                  <li key={j}>{point}</li>
-                ))}
-              </ul>
+              <span style={{ background: 'rgba(255,255,255,0.05)', padding: '5px 15px', borderRadius: '20px', fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
+                {exp.date}
+              </span>
             </div>
-          </div>
+            <p style={{ marginTop: '20px', color: 'var(--text-secondary)', lineHeight: '1.7' }}>
+              {exp.desc}
+            </p>
+          </motion.div>
         ))}
       </div>
     </section>
