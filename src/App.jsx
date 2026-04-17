@@ -8,6 +8,7 @@ import Projects from './components/Projects';
 import Achievements from './components/Achievements';
 import Footer from './components/Footer';
 import './index.css';
+import './App.css';
 
 function App() {
   return (
