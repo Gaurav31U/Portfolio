@@ -1,6 +1,7 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, Suspense, lazy } from 'react';
 import Navbar from './components/Navbar';
-import Hero from './components/Hero';
+const AnimatedHero3D = lazy(() => import('./components/AnimatedHero3D'));
+const CircuitBoard = lazy(() => import('./components/CircuitBoard'));
 import About from './components/About';
 import Skills from './components/Skills';
 import Experience from './components/Experience';
@@ -44,10 +45,20 @@ function App() {
         style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', zIndex: 0 }}
       />
 
+      {/* Intricate Motherboard HUD Background */}
+      <div style={{ position: 'fixed', left: 0, top: 0, width: '100vw', height: '100vh', zIndex: 1, pointerEvents: 'none', opacity: 0.5 }}>
+        <Suspense fallback={null}>
+          <CircuitBoard />
+        </Suspense>
+      </div>
+
       <div style={{ position: 'relative', zIndex: 10 }}>
         <Navbar />
         <main>
-          <Hero />
+          <Suspense fallback={<div style={{height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#0ff'}}>Loading Hero...</div>}>
+            <AnimatedHero3D />
+          </Suspense>
+
           <About />
           <Skills />
           <Experience />
