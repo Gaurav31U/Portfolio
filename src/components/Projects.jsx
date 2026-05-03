@@ -6,57 +6,100 @@ import { useGSAP } from '@gsap/react';
 
 const projects = [
   {
-    title: "ABYSS: Visual Engine",
-    desc: "Engineered a web-based educational 3D visualization platform using React, Three.js, and Node.js. Built a scalable backend with CouchDB and deployed on AWS EC2 with automated CI/CD to decode complex systems across Science, Math, and AI.",
+    title: "ABYSS: Visual Cognitive Engine",
+    desc: [
+      "Engineered a web-based educational visualization platform designed to decode complex systems across Science, Math, AI, and Finance using interactive 3D environments.",
+      "Built an immersive React frontend leveraging Three.js (@react-three/fiber, @react-three/drei) and Framer Motion to render real-time, interactive models.",
+      "Designed a Node.js/Express backend with an Apache CouchDB database to securely store and retrieve complex visual configurations.",
+      "Deployed on AWS EC2 using Nginx as a reverse proxy, configuring SSL via Let's Encrypt, and integrating AWS SES for communications.",
+      "Optimized memory utilization for AWS t2.micro/nano instances by configuring system swap space, achieving stable 3D rendering."
+    ],
     tag: "React / Three.js / AWS",
     link: "https://github.com/Gaurav31U",
     icon: Atom
   },
   {
     title: "GyanDrishti",
-    desc: "Architected a modern Android educational platform delivering immersive 3D lesson content. Engineered a custom network proxy and local caching system to serve WebGL assets, with UI built in Jetpack Compose and Firebase backend.",
+    desc: [
+      "Architected and deployed a modern Android educational platform delivering immersive 3D lesson content using a hardware-accelerated WebView implementation with Three.js.",
+      "Engineered a custom network proxy and local file caching system to intercept and cache 3D assets, significantly reducing network latency.",
+      "Developed a dynamic, premium UI/UX using Jetpack Compose, featuring an animated search system and custom dark-themed design system.",
+      "Built a custom analytics engine to track user engagement, visualizing learning distribution through animated Compose Canvas charts.",
+      "Integrated Google AdMob, Google Play Billing, and Firebase (Auth, Firestore) for secure real-time data sync and monetization."
+    ],
     tag: "Kotlin / Jetpack Compose",
     link: "https://github.com/Gaurav31U",
     icon: BrainCircuit
   },
   {
     title: "QuizOcean",
-    desc: "Designed an educational testing platform with specialized IQ assessments. Built a reactive UI with Jetpack Compose, integrated complex LaTeX math rendering, offline-mode support, and monetized via Google Play Billing.",
+    desc: [
+      "Architected a comprehensive educational Android application using Kotlin and Jetpack Compose with a clean MVVM architecture.",
+      "Engineered a robust backend infrastructure using Firebase Firestore and Auth, implementing secure OTP verification with custom rate-limiting.",
+      "Developed an offline-first experience utilizing a custom network monitoring service to gracefully handle connectivity states.",
+      "Integrated complex mathematical formula rendering using JLaTeXMath and implemented logic for standardized IQ tests.",
+      "Implemented a highly scalable, paginated real-time leaderboard using Firestore to optimize read operations.",
+      "Monetized the application by integrating Google Play Billing for premium subscriptions and Google AdMob."
+    ],
     tag: "Kotlin / Firebase",
     link: "https://github.com/Gaurav31U",
     icon: GraduationCap
   },
   {
     title: "JEE Mock Test Series",
-    desc: "Built a Kotlin-based exam simulation app serving dynamic mock tests with real-time sync via Firebase Firestore. Designed an automated performance engine providing subject-wise scoring and LaTeX-rendered solutions.",
+    desc: [
+      "Developed a feature-rich, native Android application in Kotlin designed to simulate the Joint Entrance Examination (JEE) with a real-time 3-hour countdown.",
+      "Integrated Firebase Firestore via the DAO pattern and Kotlin Coroutines for real-time synchronization of dynamic mock tests.",
+      "Incorporated a LaTeX formatter library (MathRenderer) to accurately render complex mathematical and chemical equations.",
+      "Engineered a performance analysis module calculating subject-wise marks, accuracy tracking, and comprehensive solution reviews.",
+      "Built a modern, edge-to-edge UI using Material 3, DataBinding, Navigation Component, and optimized RecyclerViews."
+    ],
     tag: "Kotlin / Android",
     link: "https://github.com/Gaurav31U/Android-Application-Mocktest",
     icon: BookOpen
   },
   {
-    title: "ArtStock E-Commerce",
-    desc: "Built a responsive Django-based platform facilitating secure art transactions. Modernized deployment by containerizing services with Docker and integrating a Prometheus, Grafana, and Loki observability stack.",
+    title: "ArtStock",
+    desc: [
+      "Developed a comprehensive e-commerce platform using Django and Python to connect artists with buyers, featuring role-based access controls.",
+      "Engineered the underlying database schema using Django ORM and SQLite to handle complex relationships between Artists, Customers, Artworks, and Orders.",
+      "Integrated image processing capabilities using Pillow to manage and optimize user-uploaded artwork efficiently.",
+      "Containerized the application infrastructure using Docker and Docker Compose, streamlining the deployment environment.",
+      "Established a robust observability pipeline by deploying Prometheus, Grafana, and Loki for real-time performance monitoring."
+    ],
     tag: "Python / Django / Docker",
     link: "https://github.com/Gaurav31U/Django-ArtStock-Website",
     icon: ShoppingBag
   },
   {
-    title: "WaterWays Cruise Booking",
-    desc: "Developed a comprehensive cruise management system using Java and Spring Boot. Ensured ACID-compliant transactions and containerized the infrastructure with Docker Compose, Redis, and Prometheus/Grafana.",
+    title: "WaterWays",
+    desc: [
+      "Developed a comprehensive cruise management web application using Java and Spring Boot, implementing an MVC/MVVM architecture.",
+      "Designed a robust MySQL database schema; enforced strict ACID properties utilizing Spring's @Transactional annotations.",
+      "Containerized the entire application ecosystem using Docker Compose with the Java backend, Redis for caching, and Prometheus/Grafana.",
+      "Engineered role-based administrative and user portals using Thymeleaf, implementing complex SQL queries for dynamic search functionalities."
+    ],
     tag: "Java / Spring Boot",
     link: "https://github.com/Gaurav31U/WaterWays-Java-Spring-Boot-Project-DBMS",
     icon: Ship
   },
   {
     title: "MLP Classifier from Scratch",
-    desc: "A highly optimized Multi-Layer Perceptron (MLP) machine learning classifier implemented entirely from scratch without high-level ML wrappers.",
+    desc: [
+      "A highly optimized Multi-Layer Perceptron (MLP) machine learning classifier implemented entirely from scratch without high-level ML wrappers.",
+      "Designed for deep understanding of backpropagation, gradient descent, and neural network architectures."
+    ],
     tag: "Python / NumPy",
     link: "https://github.com/Gaurav31U/Multilayer-Perceptron-Classifier-using-Python",
     icon: Cpu
   },
   {
     title: "Core Software Reconstructions",
-    desc: "Deep-dive systems engineering reconstructing industry-standard software from scratch in C++. Implementations include: HTTP Server, Git, Redis, DNS Server, SQLite, and BitTorrent.",
+    desc: [
+      "Deep-dive systems engineering reconstructing industry-standard software from scratch in C++.",
+      "Implementations include: HTTP Server, Git, Redis, DNS Server, SQLite, and BitTorrent.",
+      "Focuses on low-level networking, custom parsers, state management, and multi-threading."
+    ],
     tag: "Modern C++ / Architecture",
     link: "https://github.com/Gaurav31U/Http-Server-using-Cpp",
     icon: Terminal
@@ -150,8 +193,8 @@ const Projects = () => {
               key={i} 
               className="glass project-card-anim"
               style={{ 
-                width: '500px', 
-                height: '450px',
+                width: '600px', 
+                height: '650px',
                 padding: '45px',
                 display: 'flex',
                 flexDirection: 'column',
@@ -171,15 +214,24 @@ const Projects = () => {
                 {Icon && <Icon size={240} color="var(--accent-cyan)" />}
               </div>
 
-              <div style={{ marginBottom: 'auto', position: 'relative', zIndex: 1 }}>
+              <div style={{ position: 'relative', zIndex: 1 }}>
                 <span style={{ fontSize: '0.8rem', color: 'var(--accent-cyan)', background: 'rgba(0, 255, 255, 0.1)', padding: '6px 16px', borderRadius: '50px', display: 'inline-block', marginBottom: '25px', fontWeight: 'bold' }}>
                   {proj.tag}
                 </span>
                 <h3 style={{ fontSize: '2rem', fontFamily: 'var(--font-heading)', marginBottom: '18px' }}>{proj.title}</h3>
-                <p style={{ color: 'var(--text-secondary)', lineHeight: '1.8', fontSize: '1.1rem' }}>{proj.desc}</p>
               </div>
               
-              <a href={proj.link} target="_blank" rel="noopener noreferrer" className="glow-btn" style={{ marginTop: '30px', alignSelf: 'flex-start', position: 'relative', zIndex: 1 }}>
+              <div className="custom-scrollbar" style={{ flex: 1, overflowY: 'auto', position: 'relative', zIndex: 1, paddingRight: '10px', marginBottom: '20px' }}>
+                <ul style={{ color: 'var(--text-secondary)', lineHeight: '1.6', fontSize: '0.95rem', paddingLeft: '20px', margin: 0, display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                  {Array.isArray(proj.desc) ? proj.desc.map((bullet, idx) => (
+                    <li key={idx}>{bullet}</li>
+                  )) : (
+                    proj.desc && <li>{proj.desc}</li>
+                  )}
+                </ul>
+              </div>
+              
+              <a href={proj.link} target="_blank" rel="noopener noreferrer" className="glow-btn" style={{ alignSelf: 'flex-start', position: 'relative', zIndex: 1 }}>
                 <ExternalLink size={18} style={{ marginRight: '10px' }} /> View Source
               </a>
             </div>
@@ -190,9 +242,13 @@ const Projects = () => {
       
       <style>{`
         @media (max-width: 768px) {
-           .project-card-anim { width: 85vw !important; padding: 30px !important; }
+           .project-card-anim { width: 85vw !important; padding: 30px !important; height: auto !important; max-height: 80vh !important; }
            .section-title { font-size: 2.2rem !important; }
         }
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: rgba(255, 255, 255, 0.05); border-radius: 10px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(0, 255, 255, 0.3); border-radius: 10px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: rgba(0, 255, 255, 0.6); }
       `}</style>
     </div>
   );
