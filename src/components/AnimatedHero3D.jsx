@@ -1,9 +1,10 @@
 import React, { useRef, useMemo } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { motion } from 'framer-motion';
 import { Typewriter } from 'react-simple-typewriter';
 import { FaGithub, FaLinkedin, FaGraduationCap } from 'react-icons/fa';
 import * as THREE from 'three';
+import gsap from 'gsap';
+import { useGSAP } from '@gsap/react';
 
 // 3D Particle Field background
 function ParticleField({ count = 800, color = "#00ffff" }) {
@@ -50,8 +51,17 @@ function ParticleField({ count = 800, color = "#00ffff" }) {
 
 // 3D Animated substitution for Hero component
 const AnimatedHero3D = () => {
+  const heroRef = useRef(null);
+
+  useGSAP(() => {
+    gsap.fromTo('.hero-content', 
+      { opacity: 0, y: 50 },
+      { opacity: 1, y: 0, duration: 1, ease: 'power3.out', delay: 0.2 }
+    );
+  }, { scope: heroRef });
+
   return (
-    <section id="home" className="hero" style={{ position: 'relative', height: '100vh', overflow: 'hidden' }}>
+    <section id="home" className="hero" style={{ position: 'relative', height: '100vh', overflow: 'hidden' }} ref={heroRef}>
       
       {/* Background R3F Canvas */}
       <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, zIndex: 0 }}>
@@ -64,11 +74,8 @@ const AnimatedHero3D = () => {
 
       <div className="watermark-text" style={{ zIndex: 1, pointerEvents: 'none' }}>ENGINEER</div>
       
-      <motion.div 
+      <div 
         className="hero-content"
-        initial={{ opacity: 0, y: 50 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
         style={{ zIndex: 2, pointerEvents: 'auto' }}
       >
         <div className="profile-container">
@@ -105,7 +112,7 @@ const AnimatedHero3D = () => {
             <a href="https://linkedin.com/in/gaurav31u" target="_blank" rel="noopener noreferrer" className="glow-icon-btn"><FaLinkedin size={20} /></a>
           </div>
         </div>
-      </motion.div>
+      </div>
     </section>
   );
 };

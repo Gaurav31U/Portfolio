@@ -12,6 +12,10 @@ import Particles from "@tsparticles/react";
 import { loadSlim } from "@tsparticles/slim";
 import './index.css';
 import './App.css';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
 
 function App() {
   const particlesInit = useCallback(async engine => {
@@ -45,8 +49,8 @@ function App() {
         style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', zIndex: 0 }}
       />
 
-      {/* Intricate Motherboard HUD Background */}
-      <div style={{ position: 'fixed', left: 0, top: 0, width: '100vw', height: '100vh', zIndex: 1, pointerEvents: 'none', opacity: 0.5 }}>
+      {/* Intricate Motherboard HUD Background - Managed for visibility */}
+      <div style={{ position: 'fixed', left: 0, top: 0, width: '100%', height: '100%', zIndex: -1, pointerEvents: 'none', opacity: 0.3 }}>
         <Suspense fallback={null}>
           <CircuitBoard />
         </Suspense>
@@ -61,8 +65,8 @@ function App() {
 
           <About />
           <Skills />
-          <Experience />
           <Projects />
+          <Experience />
           <Achievements />
         </main>
         <Footer />

@@ -1,7 +1,11 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useRef } from 'react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useGSAP } from '@gsap/react';
 
 const Experience = () => {
+  const compRef = useRef(null);
+
   const experiences = [
     {
       role: "Software Engineer Intern (Microservices)",
@@ -17,22 +21,27 @@ const Experience = () => {
     }
   ];
 
+  useGSAP(() => {
+    gsap.fromTo('.section-title-anim',
+      { y: 30, opacity: 0 },
+      { y: 0, opacity: 1, duration: 0.8, ease: 'power3.out', scrollTrigger: { trigger: '.section-title-anim', start: 'top 95%', end: 'top 50%', scrub: 1 } }
+    );
+
+    gsap.fromTo('.exp-card',
+      { x: -30, opacity: 0 },
+      { x: 0, opacity: 1, duration: 0.8, ease: 'power3.out', stagger: 0.2, scrollTrigger: { trigger: '.exp-grid', start: 'top 90%', end: 'top 40%', scrub: 1 } }
+    );
+  }, { scope: compRef });
+
   return (
-    <section id="experience" className="section">
-      <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
+    <section id="experience" className="section" ref={compRef}>
+      <div className="section-title-anim">
         <h2 className="section-title">04 — <span className="text-gradient">EXPERIENCE</span></h2>
-      </motion.div>
+      </div>
       
       <div className="exp-grid">
         {experiences.map((exp, i) => (
-          <motion.div 
-            key={i} 
-            className="exp-card glass"
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: i * 0.2 }}
-          >
+          <div key={i} className="exp-card glass">
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '10px' }}>
               <div>
                 <h3 style={{ fontSize: '1.4rem', fontFamily: 'var(--font-heading)' }}>{exp.role}</h3>
@@ -45,7 +54,7 @@ const Experience = () => {
             <p style={{ marginTop: '20px', color: 'var(--text-secondary)', lineHeight: '1.7' }}>
               {exp.desc}
             </p>
-          </motion.div>
+          </div>
         ))}
       </div>
     </section>

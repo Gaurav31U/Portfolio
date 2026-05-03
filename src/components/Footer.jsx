@@ -1,16 +1,23 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useRef } from 'react';
 import { FaGithub, FaLinkedin, FaEnvelope, FaCode } from 'react-icons/fa';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useGSAP } from '@gsap/react';
+
+gsap.registerPlugin(ScrollTrigger);
 
 const Footer = () => {
+  const compRef = useRef(null);
+
+  useGSAP(() => {
+    gsap.from('.footer-cta', {
+      scale: 0.9, opacity: 0, duration: 0.8, ease: 'back.out(1.5)', scrollTrigger: { trigger: '.footer-cta', start: 'top 90%' }
+    });
+  }, { scope: compRef });
+
   return (
-    <footer className="epic-footer">
-      <motion.div 
-        initial={{ opacity: 0, scale: 0.9 }}
-        whileInView={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.8 }}
-        viewport={{ once: true }}
-      >
+    <footer className="epic-footer" ref={compRef}>
+      <div className="footer-cta">
         <h1 className="epic-text">
           <span className="text-gradient">let's build</span>
           <span>something epic.</span>
@@ -18,7 +25,7 @@ const Footer = () => {
         <a href="mailto:gkxp1000@gmail.com" className="glow-btn" style={{ padding: '16px 40px', fontSize: '1.2rem', marginTop: '2rem' }}>
           Start a Conversation
         </a>
-      </motion.div>
+      </div>
 
       <div className="footer-bottom">
         <div style={{ textAlign: 'left' }}>

@@ -1,5 +1,7 @@
 import React, { useEffect, useRef, useState, useMemo } from 'react';
-import { gsap } from 'gsap';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useGSAP } from '@gsap/react';
 import { 
   SiRedis, SiDjango, SiSpringboot, SiReact, SiAndroid, SiApachekafka,
   SiCplusplus, SiPython, SiFirebase, SiDocker, SiNodedotjs, SiGit,
@@ -82,49 +84,57 @@ export default function CircuitBoard() {
     return { decoNodes: dNodes, lines: computedLines };
   }, []);
 
-  useEffect(() => {
-    let ticking = false;
-    const handleScroll = () => {
-      if (!ticking) {
-        window.requestAnimationFrame(() => {
-          const scrollY = window.scrollY;
-          const vh = window.innerHeight;
+  useGSAP(() => {
+    // Initial Intro animation for Tech Nodes
+    gsap.fromTo('.tech-node-group',
+      { scale: 0, opacity: 0 },
+      { scale: 1, opacity: 1, duration: 1.5, ease: "elastic.out(1, 0.4)", stagger: 0.05, transformOrigin: 'center center' }
+    );
 
-          // HIDE GRAPH ON HERO: Fade in sequentially as user scrolls past introduction
-          if (containerRef.current) {
-             // Graph starts invisible at top (0 opacity up to 20vh scroll)
-             // Fully fades in by the time Hero is almost out of view (80vh scroll)
-             let opacity = 0;
-             if (scrollY > vh * 0.2) {
-                 opacity = Math.min(1, Math.pow((scrollY - vh * 0.2) / (vh * 0.6), 1.5));
-             }
-             containerRef.current.style.opacity = opacity;
-          }
+    // Intro animation for lines
+    gsap.fromTo('.circuit-edge',
+      { opacity: 0 },
+      { opacity: (i, el) => el.getAttribute('data-base-opacity'), duration: 2, ease: "power2.inOut", stagger: 0.002 }
+    );
 
-          if (svgRef.current) {
-            // Calculate strictly bounded parallax to PREVENT blank screen clipping
-            const maxScroll = Math.max(1, document.body.scrollHeight - vh);
-            const scrollProgress = Math.min(1, Math.max(0, scrollY / maxScroll));
-            
-            const maxShiftPx = vh * 0.18; 
-            const yShift = -(scrollProgress * maxShiftPx); 
-            
-            // Re-centered rotation to permanently prevent pendulum corner clipping
-            const rotation = scrollProgress * 15; 
-            
-            svgRef.current.style.transform = `translate3d(0, ${yShift}px, 0) rotate(${rotation}deg)`;
-          }
-          ticking = false;
-        });
-        ticking = true;
+    // Fade in Graph on scroll past Hero
+    gsap.fromTo(containerRef.current,
+      { opacity: 0 },
+      {
+        opacity: 0.5,
+        scrollTrigger: {
+          trigger: document.body,
+          start: "5% top",
+          end: "15% top",
+          scrub: true
+        }
       }
-    };
+    );
 
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    // Trigger once on mount
-    handleScroll();
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+    // Fade out Graph when reaching Projects section
+    gsap.to(containerRef.current, {
+      opacity: 0,
+      scrollTrigger: {
+        trigger: "#projects",
+        start: "top 20%",
+        end: "top top",
+        scrub: true
+      }
+    });
+
+    // Parallax logic to prevent blank screen clipping
+    gsap.to(svgRef.current, {
+      y: () => -(window.innerHeight * 0.18),
+      rotation: 15,
+      ease: "none",
+      scrollTrigger: {
+        trigger: document.body,
+        start: "top top",
+        end: "bottom bottom",
+        scrub: true
+      }
+    });
+  }, { scope: containerRef });
 
   const handleNodeEnter = (nodeId) => {
     setActiveEdge(nodeId);
@@ -135,7 +145,7 @@ export default function CircuitBoard() {
   };
 
   return (
-    <div ref={containerRef} style={{ width: '100%', height: '100%', position: 'absolute', top: 0, left: 0, pointerEvents: 'none', overflow: 'hidden', opacity: 0, transition: 'opacity 0.2s ease-out' }}>
+    <div ref={containerRef} style={{ width: '100%', height: '100%', position: 'absolute', top: 0, left: 0, pointerEvents: 'none', overflow: 'hidden', opacity: 0 }}>
       <style>
         {`
           @keyframes float-pulse { 
@@ -176,7 +186,7 @@ export default function CircuitBoard() {
         {/* Render Plexus Lines */}
         <g stroke="#00ffff" strokeWidth="1">
            {lines.map((line) => (
-              <line key={line.id} x1={line.x1} y1={line.y1} x2={line.x2} y2={line.y2} opacity={line.opacity} />
+              <line key={line.id} x1={line.x1} y1={line.y1} x2={line.x2} y2={line.y2} opacity={line.opacity} className="circuit-edge" data-base-opacity={line.opacity} />
            ))}
         </g>
         
@@ -213,7 +223,7 @@ export default function CircuitBoard() {
               style={{ cursor: 'pointer', outline: 'none', pointerEvents: 'auto' }}
               onMouseEnter={() => handleNodeEnter(node.id)}
               onMouseLeave={handleNodeLeave}
-              className={isActive ? "tech-node-active" : ""}
+              className={`tech-node-group ${isActive ? "tech-node-active" : ""}`}
             >
               {/* Soft organic outer halo */}
               <circle 
