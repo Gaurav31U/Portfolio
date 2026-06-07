@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, useMemo } from 'react';
+import React, { useRef, useState, useMemo } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
@@ -9,36 +9,36 @@ import {
 } from 'react-icons/si';
 import { FaJava, FaAws } from 'react-icons/fa';
 
+// Expanded strictly non-zoomed 3840x2160 Coordinate Space!
+// Visible viewport matches x: 1920-3840 and y: 0-1080
+const techNodes = [
+  { id: 'react', x: 2270, y: 350, icon: SiReact, color: '#61DAFB', name: 'React' },
+  { id: 'django', x: 3420, y: 320, icon: SiDjango, color: '#44B78B', name: 'Django' },
+  { id: 'spring', x: 2420, y: 750, icon: SiSpringboot, color: '#6DB33F', name: 'Spring' },
+  { id: 'android', x: 3320, y: 800, icon: SiAndroid, color: '#3DDC84', name: 'Android' },
+  { id: 'kafka', x: 2720, y: 200, icon: SiApachekafka, color: '#ffffff', name: 'Kafka' },
+  { id: 'redis', x: 2920, y: 850, icon: SiRedis, color: '#DC382D', name: 'Redis' },
+  { id: 'cplusplus', x: 2070, y: 550, icon: SiCplusplus, color: '#00599C', name: 'C++' },
+  { id: 'python', x: 3120, y: 200, icon: SiPython, color: '#FFD43B', name: 'Python' },
+  { id: 'java', x: 3670, y: 600, icon: FaJava, color: '#f89820', name: 'Java' },
+  { id: 'aws', x: 3020, y: 550, icon: FaAws, color: '#FF9900', name: 'AWS' },
+  { id: 'firebase', x: 2670, y: 500, icon: SiFirebase, color: '#FFCA28', name: 'Firebase' },
+  { id: 'docker', x: 2170, y: 800, icon: SiDocker, color: '#2496ED', name: 'Docker' },
+  { id: 'node', x: 2020, y: 950, icon: SiNodedotjs, color: '#339933', name: 'Node.js' },
+  { id: 'git', x: 2570, y: 950, icon: SiGit, color: '#F05032', name: 'Git' },
+  
+  // Deep Space Nodes - Physically positioned deep in the overflow zone so they swing up naturally into the blank space!
+  { id: 'ruby', x: 1800, y: 1300, icon: SiRuby, color: '#CC342D', name: 'Ruby' },
+  { id: 'rails', x: 1400, y: 1550, icon: SiRubyonrails, color: '#D30001', name: 'Rails' },
+  { id: 'k8s', x: 2000, y: 1650, icon: SiKubernetes, color: '#326CE5', name: 'K8s' },
+  { id: 'sqlite', x: 1600, y: 1200, icon: SiPostgresql, color: '#336791', name: 'Postgres' },
+  { id: 'linux', x: 1200, y: 1800, icon: SiLinux, color: '#FCC624', name: 'Linux' }
+];
+
 export default function CircuitBoard() {
   const containerRef = useRef();
   const svgRef = useRef();
   const [activeEdge, setActiveEdge] = useState(null);
-
-  // Expanded strictly non-zoomed 3840x2160 Coordinate Space!
-  // Visible viewport matches x: 1920-3840 and y: 0-1080
-  const techNodes = [
-    { id: 'react', x: 2270, y: 350, icon: SiReact, color: '#61DAFB', name: 'React' },
-    { id: 'django', x: 3420, y: 320, icon: SiDjango, color: '#44B78B', name: 'Django' },
-    { id: 'spring', x: 2420, y: 750, icon: SiSpringboot, color: '#6DB33F', name: 'Spring' },
-    { id: 'android', x: 3320, y: 800, icon: SiAndroid, color: '#3DDC84', name: 'Android' },
-    { id: 'kafka', x: 2720, y: 200, icon: SiApachekafka, color: '#ffffff', name: 'Kafka' },
-    { id: 'redis', x: 2920, y: 850, icon: SiRedis, color: '#DC382D', name: 'Redis' },
-    { id: 'cplusplus', x: 2070, y: 550, icon: SiCplusplus, color: '#00599C', name: 'C++' },
-    { id: 'python', x: 3120, y: 200, icon: SiPython, color: '#FFD43B', name: 'Python' },
-    { id: 'java', x: 3670, y: 600, icon: FaJava, color: '#f89820', name: 'Java' },
-    { id: 'aws', x: 3020, y: 550, icon: FaAws, color: '#FF9900', name: 'AWS' },
-    { id: 'firebase', x: 2670, y: 500, icon: SiFirebase, color: '#FFCA28', name: 'Firebase' },
-    { id: 'docker', x: 2170, y: 800, icon: SiDocker, color: '#2496ED', name: 'Docker' },
-    { id: 'node', x: 2020, y: 950, icon: SiNodedotjs, color: '#339933', name: 'Node.js' },
-    { id: 'git', x: 2570, y: 950, icon: SiGit, color: '#F05032', name: 'Git' },
-    
-    // Deep Space Nodes - Physically positioned deep in the overflow zone so they swing up naturally into the blank space!
-    { id: 'ruby', x: 1800, y: 1300, icon: SiRuby, color: '#CC342D', name: 'Ruby' },
-    { id: 'rails', x: 1400, y: 1550, icon: SiRubyonrails, color: '#D30001', name: 'Rails' },
-    { id: 'k8s', x: 2000, y: 1650, icon: SiKubernetes, color: '#326CE5', name: 'K8s' },
-    { id: 'sqlite', x: 1600, y: 1200, icon: SiPostgresql, color: '#336791', name: 'Postgres' },
-    { id: 'linux', x: 1200, y: 1800, icon: SiLinux, color: '#FCC624', name: 'Linux' }
-  ];
 
   // Procedurally generate the organic Neural Network Plexus
   const { decoNodes, lines } = useMemo(() => {
@@ -112,15 +112,42 @@ export default function CircuitBoard() {
     );
 
     // Fade out Graph when reaching Projects section
-    gsap.to(containerRef.current, {
-      opacity: 0,
-      scrollTrigger: {
-        trigger: "#projects",
-        start: "top 20%",
-        end: "top top",
-        scrub: true
+    let projectsTrigger = null;
+    let timer = null;
+
+    const setupProjectsTrigger = () => {
+      const el = document.getElementById('projects');
+      if (el && containerRef.current) {
+        const tween = gsap.to(containerRef.current, {
+          opacity: 0,
+          scrollTrigger: {
+            trigger: el,
+            start: "top 20%",
+            end: "top top",
+            scrub: true
+          }
+        });
+        projectsTrigger = tween.scrollTrigger;
+      } else if (!el) {
+        timer = setTimeout(() => {
+          const retryEl = document.getElementById('projects');
+          if (retryEl && containerRef.current) {
+            const tween = gsap.to(containerRef.current, {
+              opacity: 0,
+              scrollTrigger: {
+                trigger: retryEl,
+                start: "top 20%",
+                end: "top top",
+                scrub: true
+              }
+            });
+            projectsTrigger = tween.scrollTrigger;
+          }
+        }, 500);
       }
-    });
+    };
+
+    setupProjectsTrigger();
 
     // Parallax logic to prevent blank screen clipping
     gsap.to(svgRef.current, {
@@ -134,6 +161,11 @@ export default function CircuitBoard() {
         scrub: true
       }
     });
+
+    return () => {
+      if (timer) clearTimeout(timer);
+      if (projectsTrigger) projectsTrigger.kill();
+    };
   }, { scope: containerRef });
 
   const handleNodeEnter = (nodeId) => {

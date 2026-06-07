@@ -36,7 +36,7 @@ function ProceduralHelix({ rotationSpeed, strandColor, highlightBaseId }) {
 
   return (
     <group ref={groupRef}>
-      {basePairs.map((pair, idx) => {
+      {basePairs.map((pair) => {
         const isHighlighted = pair.id === highlightBaseId;
         const color = isHighlighted ? '#ff0055' : strandColor;
 

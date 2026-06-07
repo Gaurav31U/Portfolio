@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { ExternalLink, BrainCircuit, GraduationCap, Ship, ShoppingBag, Atom, BookOpen, Cpu, Terminal } from 'lucide-react';
+import { ExternalLink, BrainCircuit, GraduationCap, Ship, ShoppingBag, Atom, BookOpen, Cpu, Terminal, GitBranch } from 'lucide-react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
@@ -15,6 +15,7 @@ const projects = [
       "Optimized memory utilization for AWS t2.micro/nano instances by configuring system swap space, achieving stable 3D rendering."
     ],
     tag: "React / Three.js / AWS",
+    branch: "main",
     link: "https://github.com/Gaurav31U",
     icon: Atom
   },
@@ -28,6 +29,7 @@ const projects = [
       "Integrated Google AdMob, Google Play Billing, and Firebase (Auth, Firestore) for secure real-time data sync and monetization."
     ],
     tag: "Kotlin / Jetpack Compose",
+    branch: "prod",
     link: "https://github.com/Gaurav31U",
     icon: BrainCircuit
   },
@@ -42,6 +44,7 @@ const projects = [
       "Monetized the application by integrating Google Play Billing for premium subscriptions and Google AdMob."
     ],
     tag: "Kotlin / Firebase",
+    branch: "stable",
     link: "https://github.com/Gaurav31U",
     icon: GraduationCap
   },
@@ -55,6 +58,7 @@ const projects = [
       "Built a modern, edge-to-edge UI using Material 3, DataBinding, Navigation Component, and optimized RecyclerViews."
     ],
     tag: "Kotlin / Android",
+    branch: "v1.2",
     link: "https://github.com/Gaurav31U/Android-Application-Mocktest",
     icon: BookOpen
   },
@@ -68,6 +72,7 @@ const projects = [
       "Established a robust observability pipeline by deploying Prometheus, Grafana, and Loki for real-time performance monitoring."
     ],
     tag: "Python / Django / Docker",
+    branch: "main",
     link: "https://github.com/Gaurav31U/Django-ArtStock-Website",
     icon: ShoppingBag
   },
@@ -80,6 +85,7 @@ const projects = [
       "Engineered role-based administrative and user portals using Thymeleaf, implementing complex SQL queries for dynamic search functionalities."
     ],
     tag: "Java / Spring Boot",
+    branch: "main",
     link: "https://github.com/Gaurav31U/WaterWays-Java-Spring-Boot-Project-DBMS",
     icon: Ship
   },
@@ -90,6 +96,7 @@ const projects = [
       "Designed for deep understanding of backpropagation, gradient descent, and neural network architectures."
     ],
     tag: "Python / NumPy",
+    branch: "legacy",
     link: "https://github.com/Gaurav31U/Multilayer-Perceptron-Classifier-using-Python",
     icon: Cpu
   },
@@ -101,10 +108,13 @@ const projects = [
       "Focuses on low-level networking, custom parsers, state management, and multi-threading."
     ],
     tag: "Modern C++ / Architecture",
+    branch: "dev",
     link: "https://github.com/Gaurav31U/Http-Server-using-Cpp",
     icon: Terminal
   }
 ];
+
+gsap.registerPlugin(ScrollTrigger);
 
 const Projects = () => {
   const compRef = useRef(null);
@@ -112,14 +122,22 @@ const Projects = () => {
 
   useGSAP(() => {
     if (!scrollRef.current || !compRef.current) return;
+
+    let activeScrollTrigger = null;
     
     const updateScroll = () => {
+      // Clean up previous scroll trigger if it exists
+      if (activeScrollTrigger) {
+        activeScrollTrigger.kill();
+        activeScrollTrigger = null;
+      }
+
       const scrollWidth = scrollRef.current.scrollWidth;
       const viewportWidth = window.innerWidth;
-      const amountToScroll = scrollWidth - (viewportWidth * 0.5); // Ensure last card fully passes
+      const amountToScroll = scrollWidth - viewportWidth;
 
       if (amountToScroll > 0) {
-        gsap.to(scrollRef.current, {
+        const tween = gsap.to(scrollRef.current, {
           x: -amountToScroll,
           ease: "none",
           scrollTrigger: {
@@ -127,12 +145,13 @@ const Projects = () => {
             pin: true,
             scrub: 1,
             start: "top top",
-            end: () => `+=${amountToScroll + 500}`, // Extra buffer for stability
+            end: () => `+=${amountToScroll}`,
             invalidateOnRefresh: true,
             anticipatePin: 1,
             pinSpacing: true,
           }
         });
+        activeScrollTrigger = tween.scrollTrigger;
       }
       ScrollTrigger.refresh();
     };
@@ -141,12 +160,12 @@ const Projects = () => {
     window.addEventListener('resize', updateScroll);
 
     gsap.fromTo(".project-card-anim", 
-      { opacity: 0, scale: 0.9, y: 50 },
+      { opacity: 0, scale: 0.95, y: 30 },
       { 
         opacity: 1, scale: 1, y: 0, 
-        stagger: 0.1, 
-        duration: 0.8, 
-        ease: "back.out(1.4)",
+        stagger: 0.08, 
+        duration: 0.6, 
+        ease: "power3.out",
         scrollTrigger: {
           trigger: compRef.current,
           start: "top 80%",
@@ -159,11 +178,14 @@ const Projects = () => {
     return () => {
       clearTimeout(timer);
       window.removeEventListener('resize', updateScroll);
+      if (activeScrollTrigger) {
+        activeScrollTrigger.kill();
+      }
     };
   }, { scope: compRef });
 
   return (
-    <div id="projects" ref={compRef} style={{ width: '100%', position: 'relative', overflow: 'hidden', zIndex: 5, background: 'var(--bg-color)' }}>
+    <div id="projects" ref={compRef} style={{ width: '100%', position: 'relative', overflow: 'hidden', zIndex: 20, background: 'var(--bg-color)' }}>
       <section style={{ 
         height: '100vh', 
         width: '100%', 
@@ -173,14 +195,17 @@ const Projects = () => {
         padding: '60px 0'
       }}>
         <div className="section-title-anim" style={{ padding: '0 8vw', marginBottom: '30px' }}>
-          <h2 className="section-title" style={{ margin: 0 }}>03 — <span className="text-gradient">OPEN SOURCE PROJECTS</span></h2>
+          <h2 className="section-title" style={{ margin: 0 }}>
+            <span className="section-num">03 —</span>
+            <span className="text-gradient">OPEN SOURCE PROJECTS</span>
+          </h2>
         </div>
         
         <div 
           ref={scrollRef} 
           style={{ 
             display: 'flex', 
-            gap: '3vw', 
+            gap: '2vw', 
             padding: '0 8vw',
             width: 'max-content',
             willChange: 'transform'
@@ -191,11 +216,11 @@ const Projects = () => {
             return (
             <div 
               key={i} 
-              className="glass project-card-anim"
+              className="card-cyber project-card-anim"
               style={{ 
-                width: '600px', 
-                height: '650px',
-                padding: '45px',
+                width: '580px', 
+                height: '600px',
+                padding: '40px',
                 display: 'flex',
                 flexDirection: 'column',
                 flexShrink: 0,
@@ -203,52 +228,58 @@ const Projects = () => {
                 overflow: 'hidden'
               }}
             >
+              {/* Massive background watermark icon */}
               <div style={{
                 position: 'absolute',
-                top: '-20px',
-                right: '-20px',
-                opacity: 0.05,
-                transform: 'rotate(-15deg)',
+                top: '-15px',
+                right: '-15px',
+                opacity: 0.025,
+                transform: 'rotate(-12deg)',
                 pointerEvents: 'none'
               }}>
-                {Icon && <Icon size={240} color="var(--accent-cyan)" />}
+                {Icon && <Icon size={220} color="var(--accent-cyan)" />}
               </div>
 
-              <div style={{ position: 'relative', zIndex: 1 }}>
-                <span style={{ fontSize: '0.8rem', color: 'var(--accent-cyan)', background: 'rgba(0, 255, 255, 0.1)', padding: '6px 16px', borderRadius: '50px', display: 'inline-block', marginBottom: '25px', fontWeight: 'bold' }}>
+              <div style={{ position: 'relative', zIndex: 1, display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
+                <span style={{ fontSize: '0.75rem', color: 'var(--accent-green)', background: 'rgba(0, 255, 156, 0.08)', border: '1px solid rgba(0, 255, 156, 0.15)', padding: '5px 12px', borderRadius: '4px', display: 'inline-block', fontWeight: '500', fontFamily: 'var(--font-mono)' }}>
                   {proj.tag}
                 </span>
-                <h3 style={{ fontSize: '2rem', fontFamily: 'var(--font-heading)', marginBottom: '18px' }}>{proj.title}</h3>
+                
+                <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: 'var(--text-secondary)', fontFamily: 'var(--font-mono)', fontSize: '0.75rem' }}>
+                  <GitBranch size={14} color="var(--accent-purple)" />
+                  <span>{proj.branch}</span>
+                </div>
               </div>
               
-              <div className="custom-scrollbar" style={{ flex: 1, overflowY: 'auto', position: 'relative', zIndex: 1, paddingRight: '10px', marginBottom: '20px' }}>
-                <ul style={{ color: 'var(--text-secondary)', lineHeight: '1.6', fontSize: '0.95rem', paddingLeft: '20px', margin: 0, display: 'flex', flexDirection: 'column', gap: '10px' }}>
+              <h3 style={{ fontSize: '1.8rem', fontFamily: 'var(--font-heading)', marginBottom: '18px', fontWeight: '600', position: 'relative', zIndex: 1 }}>{proj.title}</h3>
+              
+              <div className="custom-scrollbar" style={{ flex: 1, overflowY: 'auto', position: 'relative', zIndex: 1, paddingRight: '10px', marginBottom: '25px' }}>
+                <ul style={{ color: 'var(--text-secondary)', lineHeight: '1.6', fontSize: '0.92rem', paddingLeft: '15px', margin: 0, display: 'flex', flexDirection: 'column', gap: '8px' }}>
                   {Array.isArray(proj.desc) ? proj.desc.map((bullet, idx) => (
-                    <li key={idx}>{bullet}</li>
+                    <li key={idx} style={{ paddingLeft: '5px' }}>{bullet}</li>
                   )) : (
-                    proj.desc && <li>{proj.desc}</li>
+                    proj.desc && <li style={{ paddingLeft: '5px' }}>{proj.desc}</li>
                   )}
                 </ul>
               </div>
               
               <a href={proj.link} target="_blank" rel="noopener noreferrer" className="glow-btn" style={{ alignSelf: 'flex-start', position: 'relative', zIndex: 1 }}>
-                <ExternalLink size={18} style={{ marginRight: '10px' }} /> View Source
+                <ExternalLink size={16} style={{ marginRight: '10px' }} /> VIEW SOURCE
               </a>
             </div>
           )})}
-          <div style={{ width: '30vw', flexShrink: 0 }}></div>
+          <div style={{ width: '25vw', flexShrink: 0 }}></div>
         </div>
       </section>
       
       <style>{`
         @media (max-width: 768px) {
-           .project-card-anim { width: 85vw !important; padding: 30px !important; height: auto !important; max-height: 80vh !important; }
-           .section-title { font-size: 2.2rem !important; }
+           .project-card-anim { width: 85vw !important; padding: 25px !important; height: auto !important; max-height: 80vh !important; }
         }
-        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
-        .custom-scrollbar::-webkit-scrollbar-track { background: rgba(255, 255, 255, 0.05); border-radius: 10px; }
-        .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(0, 255, 255, 0.3); border-radius: 10px; }
-        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: rgba(0, 255, 255, 0.6); }
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: rgba(255, 255, 255, 0.02); border-radius: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(0, 240, 255, 0.2); border-radius: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: rgba(0, 240, 255, 0.4); }
       `}</style>
     </div>
   );

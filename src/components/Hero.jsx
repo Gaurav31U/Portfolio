@@ -1,5 +1,4 @@
 import React from 'react';
-import { motion } from 'framer-motion';
 import { Typewriter } from 'react-simple-typewriter';
 import { FaGithub, FaLinkedin, FaGraduationCap } from 'react-icons/fa';
 
@@ -8,11 +7,8 @@ const Hero = () => {
     <section id="home" className="hero">
       <div className="watermark-text" style={{ zIndex: 0 }}>ENGINEER</div>
       
-      <motion.div 
+      <div 
         className="hero-content"
-        initial={{ opacity: 0, y: 50 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
         style={{ zIndex: 2 }}
       >
         <div className="profile-container">
@@ -50,7 +46,7 @@ const Hero = () => {
             <a href="https://linkedin.com/in/gaurav31u" target="_blank" rel="noopener noreferrer" className="glow-icon-btn"><FaLinkedin size={20} /></a>
           </div>
         </div>
-      </motion.div>
+      </div>
     </section>
   );
 };

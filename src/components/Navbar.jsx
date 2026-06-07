@@ -14,31 +14,60 @@ const Navbar = () => {
   return (
     <nav className={`navbar ${scrolled ? 'scrolled' : ''}`}>
       <div className="nav-brand">
-        <a href="#home" style={{ color: '#fff', textDecoration: 'none' }}>Gaurav<span className="text-gradient">.</span></a>
+        <a href="#home" style={{ color: '#fff', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <span>GAURAV</span>
+          <span style={{ width: '4px', height: '4px', borderRadius: '50%', background: 'var(--accent-green)', display: 'inline-block' }}></span>
+          <span style={{ fontSize: '0.75rem', fontFamily: 'var(--font-mono)', color: 'var(--accent-cyan)', fontWeight: '400', letterSpacing: '1px' }}>IIT BHU</span>
+        </a>
       </div>
       
-      <ul className={`nav-links ${mobileMenuOpen ? 'active' : ''}`} style={{ display: mobileMenuOpen ? 'flex' : '' }}>
-        {['About', 'Skills', 'Experience', 'Projects'].map(item => (
-          <li key={item}><a href={`#${item.toLowerCase()}`} onClick={() => setMobileMenuOpen(false)}>{item}</a></li>
+      <ul className={`nav-links ${mobileMenuOpen ? 'active' : ''}`}>
+        {['About', 'Skills', 'Projects', 'Experience', 'Achievements'].map(item => (
+          <li key={item}>
+            <a href={`#${item.toLowerCase()}`} onClick={() => setMobileMenuOpen(false)}>
+              {item}
+            </a>
+          </li>
         ))}
       </ul>
 
       <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
-        <a href="mailto:gkxp1000@gmail.com" className="glow-btn" style={{ fontSize: '0.85rem', padding: '10px 20px', display: window.innerWidth > 768 || mobileMenuOpen ? 'inline-flex' : 'none' }}>
-           Contact Me
+        <div className="nav-status" style={{ display: window.innerWidth > 768 ? 'flex' : 'none' }}>
+          <span className="status-dot"></span>
+          <span>SYSTEMS ACTIVE</span>
+        </div>
+
+        <a href="mailto:gkxp1000@gmail.com" className="glow-btn" style={{ fontSize: '0.75rem', padding: '8px 18px' }}>
+          CONTACT
         </a>
+
         <button className="mobile-menu-btn" style={{ background: 'none', border: 'none', color: '#fff', cursor: 'pointer', zIndex: 1001 }} onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
-          {mobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
+          {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
       </div>
 
       <style>{`
+        .nav-links.active {
+          display: flex !important;
+          flex-direction: column;
+          position: fixed;
+          top: 0; left: 0; right: 0; bottom: 0;
+          background: #030303;
+          align-items: center;
+          justify-content: center;
+          gap: 30px;
+          z-index: 1000;
+        }
+        .nav-links.active li a {
+          font-size: 1.4rem;
+        }
         @media (max-width: 768px) {
-          .nav-links { display: none; flex-direction: column; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: #030303; align-items: center; justify-content: center; font-size: 1.5rem; z-index: 1000; }
-          .nav-links li a { font-size: 1.5rem; }
+          .nav-links { display: none; }
           .mobile-menu-btn { display: block !important; }
         }
-        @media (min-width: 769px) { .mobile-menu-btn { display: none !important; } }
+        @media (min-width: 769px) {
+          .mobile-menu-btn { display: none !important; }
+        }
       `}</style>
     </nav>
   );

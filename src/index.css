@@ -1,18 +1,18 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;600;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap');
 
 :root {
   --bg-color: #030303;
-  --bg-color-light: #0a0a0a;
+  --bg-color-light: #08080c;
   --text-primary: #ffffff;
-  --text-secondary: #94A3B8;
-  --accent-cyan: #00ffff;
-  --accent-purple: #a855f7;
-  
-  --card-bg: rgba(255, 255, 255, 0.02);
-  --card-border: rgba(255, 255, 255, 0.05);
-  
+  --text-secondary: #8f9cae;
+  --accent-green: #00ff9c;
+  --accent-cyan: #00f0ff;
+  --accent-purple: #8b5cf6;
+  --card-bg: rgba(8, 8, 12, 0.6);
+  --card-border: rgba(255, 255, 255, 0.04);
   --font-main: 'Inter', sans-serif;
-  --font-heading: 'Outfit', sans-serif;
+  --font-heading: 'Space Grotesk', sans-serif;
+  --font-mono: 'Fira Code', monospace;
 }
 
 * {
@@ -35,34 +35,105 @@ body {
   overflow-x: hidden;
 }
 
-/* Scrollbar */
-::-webkit-scrollbar { width: 8px; }
+/* Cyber dot-grid and grid-mesh overlays */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background-image: radial-gradient(rgba(0, 240, 255, 0.04) 1px, transparent 1px);
+  background-size: 24px 24px;
+  z-index: 1;
+  pointer-events: none;
+}
+
+body::after {
+  content: '';
+  position: fixed;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background-image: linear-gradient(rgba(255, 255, 255, 0.005) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(255, 255, 255, 0.005) 1px, transparent 1px);
+  background-size: 96px 96px;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: var(--bg-color); }
 ::-webkit-scrollbar-thumb {
-  background: #222;
-  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover { background: var(--accent-cyan); }
 
-/* Glassmorphism Class */
+/* Glassmorphism Card Style */
 .glass {
   background: var(--card-bg);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   border: 1px solid var(--card-border);
-  border-radius: 24px;
+  border-radius: 12px;
+  position: relative;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+/* Cybernetic HUD elements */
+.card-cyber {
+  background: rgba(8, 8, 12, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: 8px;
+  position: relative;
+  padding: 30px;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Corner bracket styles */
+.card-cyber::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; width: 8px; height: 8px;
+  border-top: 2px solid var(--accent-green);
+  border-left: 2px solid var(--accent-green);
+  transition: all 0.3s ease;
+}
+
+.card-cyber::after {
+  content: '';
+  position: absolute;
+  bottom: 0; right: 0; width: 8px; height: 8px;
+  border-bottom: 2px solid var(--accent-cyan);
+  border-right: 2px solid var(--accent-cyan);
+  transition: all 0.3s ease;
+}
+
+.card-cyber:hover {
+  border-color: rgba(0, 240, 255, 0.2);
+  box-shadow: 0 10px 30px rgba(0, 240, 255, 0.04);
+  transform: translateY(-3px);
+}
+
+.card-cyber:hover::before {
+  width: 16px; height: 16px;
+  border-color: var(--accent-cyan);
+}
+
+.card-cyber:hover::after {
+  width: 16px; height: 16px;
+  border-color: var(--accent-green);
+}
+
+/* Text Gradients */
 .text-gradient {
-  background: linear-gradient(to right, var(--accent-cyan), var(--accent-purple));
+  background: linear-gradient(135deg, var(--accent-green), var(--accent-cyan), var(--accent-purple));
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
 }
 
 .section {
-  padding: 120px 20px;
-  max-width: 1300px;
+  padding: 140px 24px;
+  max-width: 1400px;
   margin: 0 auto;
   position: relative;
   z-index: 10;
@@ -71,61 +142,78 @@ body {
 .section-title {
   font-family: var(--font-heading);
   font-size: 3.5rem;
-  font-weight: 800;
-  margin-bottom: 4rem;
-  letter-spacing: -1px;
+  font-weight: 700;
+  margin-bottom: 5rem;
+  letter-spacing: -1.5px;
+  text-transform: uppercase;
+}
+
+.section-num {
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  color: var(--accent-green);
+  margin-right: 15px;
+  vertical-align: middle;
 }
 
 @media (max-width: 768px) {
-  .section-title { font-size: 2.5rem; }
+  .section { padding: 80px 16px; }
+  .section-title { font-size: 2.2rem; margin-bottom: 3rem; }
 }
 
+/* Glowing Neon Buttons */
 .glow-btn {
   background: transparent;
   color: #fff;
-  border: 1px solid var(--accent-cyan);
-  padding: 12px 32px;
-  border-radius: 50px;
-  font-family: var(--font-main);
-  font-weight: 600;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  padding: 12px 30px;
+  border-radius: 4px;
+  font-family: var(--font-heading);
+  font-weight: 500;
+  font-size: 0.95rem;
+  letter-spacing: 0.5px;
   text-decoration: none;
   display: inline-flex;
   align-items: center;
-  transition: all 0.3s ease;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   position: relative;
   overflow: hidden;
+  cursor: pointer;
 }
 
 .glow-btn::before {
   content: '';
   position: absolute;
   top: 0; left: 0; width: 100%; height: 100%;
-  background: var(--accent-cyan);
+  background: linear-gradient(90deg, var(--accent-green), var(--accent-cyan));
   z-index: -1;
   opacity: 0;
-  transition: all 0.3s ease;
+  transition: all 0.4s ease;
 }
 
 .glow-btn:hover {
-  box-shadow: 0 0 20px rgba(0, 255, 255, 0.4);
-  color: #000;
+  border-color: transparent;
+  box-shadow: 0 0 25px rgba(0, 255, 156, 0.35);
+  color: #030303;
+  transform: translateY(-2px);
+  font-weight: 600;
 }
 
 .glow-btn:hover::before { opacity: 1; }
 
 .glow-icon-btn {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  width: 45px; height: 45px;
-  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  width: 44px; height: 44px;
+  border-radius: 6px;
   display: flex; align-items: center; justify-content: center;
   color: var(--text-secondary);
-  transition: all 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .glow-icon-btn:hover {
   border-color: var(--accent-cyan);
-  color: var(--accent-cyan);
-  box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
-  transform: translateY(-3px);
+  color: #fff;
+  box-shadow: 0 0 15px rgba(0, 240, 255, 0.2);
+  transform: translateY(-2px);
 }

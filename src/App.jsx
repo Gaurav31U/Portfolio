@@ -1,6 +1,6 @@
 import React, { useCallback, Suspense, lazy } from 'react';
 import Navbar from './components/Navbar';
-const AnimatedHero3D = lazy(() => import('./components/AnimatedHero3D'));
+import AnimatedHero3D from './components/AnimatedHero3D';
 const CircuitBoard = lazy(() => import('./components/CircuitBoard'));
 import About from './components/About';
 import Skills from './components/Skills';
@@ -59,9 +59,7 @@ function App() {
       <div style={{ position: 'relative', zIndex: 10 }}>
         <Navbar />
         <main>
-          <Suspense fallback={<div style={{height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#0ff'}}>Loading Hero...</div>}>
-            <AnimatedHero3D />
-          </Suspense>
+          <AnimatedHero3D />
 
           <About />
           <Skills />
