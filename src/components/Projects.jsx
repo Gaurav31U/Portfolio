@@ -1,23 +1,68 @@
-import React, { useRef } from 'react';
-import { ExternalLink, BrainCircuit, GraduationCap, Ship, ShoppingBag, Atom, BookOpen, Cpu, Terminal, GitBranch } from 'lucide-react';
+import React, { useRef, useState } from 'react';
+import { ExternalLink, BrainCircuit, GraduationCap, Ship, ShoppingBag, Atom, BookOpen, Cpu, Terminal, GitBranch, Shield, Volume2, Code } from 'lucide-react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
+import AbyssLogicLab from './AbyssLogicLab';
 
 const projects = [
   {
-    title: "ABYSS: Visual Cognitive Engine",
+    title: "ABYSS (Logic Lab)",
     desc: [
-      "Engineered a web-based educational visualization platform designed to decode complex systems across Science, Math, AI, and Finance using interactive 3D environments.",
-      "Built an immersive React frontend leveraging Three.js (@react-three/fiber, @react-three/drei) and Framer Motion to render real-time, interactive models.",
-      "Designed a Node.js/Express backend with an Apache CouchDB database to securely store and retrieve complex visual configurations.",
-      "Deployed on AWS EC2 using Nginx as a reverse proxy, configuring SSL via Let's Encrypt, and integrating AWS SES for communications.",
-      "Optimized memory utilization for AWS t2.micro/nano instances by configuring system swap space, achieving stable 3D rendering."
+      "Engineered a WebGL-powered 3D simulation engine utilizing React Three Fiber and Three.js to render complex quantum mechanics, chemical bonding, and multivariable calculus manifolds at 60 FPS.",
+      "Programmed dynamic mesh deformation loops that compile and mutate WebGL plane geometries in real time using Three.js buffer attributes.",
+      "Integrated a symbolic math parsing and calculation system inside the React state lifecycle to parse and evaluate user-defined equations dynamically.",
+      "Offloaded CPU-intensive Monte Carlo and Markov Chain Monte Carlo (MCMC) simulations to background Web Workers to maintain frame rates.",
+      "Orchestrated a premium, dark-themed glassmorphism HUD interface using styled CSS and custom keyframe animations.",
+      "Built real-time statistical distribution graphs and convergence charts using custom HTML5 Canvas components for zero-dependency charting."
     ],
-    tag: "React / Three.js / AWS",
+    tag: "React / WebGL / Web Workers",
+    branch: "main",
+    link: "https://abyss-web.s3.ap-south-1.amazonaws.com/index.html",
+    icon: Atom
+  },
+  {
+    title: "NetWire (VPN & Security Shield)",
+    desc: [
+      "Engineered a high-performance C++ packet capture service integrated with Android’s VpnService API using the Java Native Interface (JNI).",
+      "Designed an asynchronous packet capture loop on a dedicated POSIX thread reading directly from the virtual TUN interface file descriptor.",
+      "Implemented raw IPv4, TCP, and UDP packet header parsers in native C++ to extract packet sizes, ports, and target IP addresses.",
+      "Optimized JNI boundary crossings by implementing a packet batching buffer to reduce CPU overhead and eliminate native memory leaks.",
+      "Developed a custom binary exporter implementing the PCAPNG file format specifications, allowing seamless analysis in Wireshark.",
+      "Sandboxed the CyberChef utility inside Jetpack Compose using WebViewAssetLoader to provide a secure offline cryptographic suite."
+    ],
+    tag: "Kotlin / C++ / JNI / Android",
+    branch: "main",
+    link: "https://play.google.com/store/apps/details?id=com.abyss.netwire",
+    icon: Shield
+  },
+  {
+    title: "TextSpeechAI (Offline AI Reader)",
+    desc: [
+      "Architected a private, offline AI document reader integrating llama.cpp and Sherpa-ONNX via JNI for local LLM and speech synthesis.",
+      "Developed a reactive document processing pipeline using PDFBox Android and Kotlin Flows on background IO thread dispatchers.",
+      "Built a TTS audio manager feeding PCM float buffers to Android AudioTrack with sentence highlight tracking and playback controls.",
+      "Created a background asset-management system using Android WorkManager and OkHttp to download and verify multi-gigabyte models.",
+      "Authored a thread-safe extraction layer using Apache Commons Compress to decompress bz2 and zip voice archives on-device."
+    ],
+    tag: "Kotlin / ONNX / Llama.cpp",
     branch: "main",
     link: "https://github.com/Gaurav31U",
-    icon: Atom
+    icon: Volume2
+  },
+  {
+    title: "GPT-2 Inference Engine",
+    desc: [
+      "Built a zero-dependency GPT-2 transformer decoder inference engine in C++ from scratch, implementing custom neural network layers.",
+      "Designed and coded a Multi-Head Attention (MHA) module implementing scaled dot-product attention, causal masking, and Softmax.",
+      "Optimized inference speed by parallelizing matrix computations and tensor operations using OpenMP multi-threaded compiler directives.",
+      "Developed an autoregressive text generation loop incorporating temperature scaling, Top-K filtering, and discrete multinomial sampling.",
+      "Engineered a Byte-Pair Encoding (BPE) SimpleTokenizer in C++ with a greedy longest-match lookup algorithm to encode/decode prompts."
+    ],
+    tag: "Modern C++ / OpenMP / AI",
+    branch: "main",
+    link: "https://github.com/Gaurav31U/LLM-using-Cplusplus",
+    icon: Code
   },
   {
     title: "GyanDrishti",
@@ -30,7 +75,7 @@ const projects = [
     ],
     tag: "Kotlin / Jetpack Compose",
     branch: "prod",
-    link: "https://github.com/Gaurav31U",
+    link: "https://play.google.com/store/apps/details?id=com.abyss.gyandrishti",
     icon: BrainCircuit
   },
   {
@@ -45,7 +90,7 @@ const projects = [
     ],
     tag: "Kotlin / Firebase",
     branch: "stable",
-    link: "https://github.com/Gaurav31U",
+    link: "https://play.google.com/store/apps/details?id=com.abyss.quizocean",
     icon: GraduationCap
   },
   {
@@ -117,6 +162,7 @@ const projects = [
 gsap.registerPlugin(ScrollTrigger);
 
 const Projects = () => {
+  const [labOpen, setLabOpen] = useState(false);
   const compRef = useRef(null);
   const scrollRef = useRef(null);
 
@@ -263,9 +309,19 @@ const Projects = () => {
                 </ul>
               </div>
               
-              <a href={proj.link} target="_blank" rel="noopener noreferrer" className="glow-btn" style={{ alignSelf: 'flex-start', position: 'relative', zIndex: 1 }}>
-                <ExternalLink size={16} style={{ marginRight: '10px' }} /> VIEW SOURCE
-              </a>
+              <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', position: 'relative', zIndex: 1, alignSelf: 'flex-start' }}>
+                <a href={proj.link} target="_blank" rel="noopener noreferrer" className="glow-btn">
+                  <ExternalLink size={16} style={{ marginRight: '10px' }} /> {
+                    proj.link.includes("play.google.com") ? "PLAY STORE" :
+                    proj.link.includes("amazonaws.com") ? "LIVE DEMO" : "VIEW SOURCE"
+                  }
+                </a>
+                {proj.title.includes("ABYSS") && (
+                  <button onClick={() => setLabOpen(true)} className="glow-btn" style={{ background: 'rgba(0, 240, 255, 0.1)', borderColor: 'var(--accent-cyan)' }}>
+                    <Atom size={16} style={{ marginRight: '10px' }} /> LAUNCH LAB
+                  </button>
+                )}
+              </div>
             </div>
           )})}
           <div style={{ width: '25vw', flexShrink: 0 }}></div>
@@ -281,6 +337,7 @@ const Projects = () => {
         .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(0, 240, 255, 0.2); border-radius: 4px; }
         .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: rgba(0, 240, 255, 0.4); }
       `}</style>
+      {labOpen && <AbyssLogicLab onClose={() => setLabOpen(false)} />}
     </div>
   );
 };
