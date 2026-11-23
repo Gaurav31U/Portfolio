@@ -1,0 +1,58 @@
+import { Globe, Smartphone, Server, Box, Sparkles, Gauge } from 'lucide-react';
+
+export const services = [
+  {
+    id: 'web',
+    title: 'Full-Stack Web Apps',
+    icon: Globe,
+    color: 'var(--accent-cyan)',
+    pitch: 'Responsive, production-ready web apps from idea to deployment.',
+    points: ['React front-ends & dashboards', 'REST APIs with auth & roles', 'Django / Spring Boot / Node backends', 'Docker deployment on AWS'],
+    stack: ['React', 'Node.js', 'Django', 'Spring Boot'],
+  },
+  {
+    id: 'android',
+    title: 'Android Apps',
+    icon: Smartphone,
+    color: 'var(--accent-green)',
+    pitch: 'Native Kotlin apps that are fast, polished and ready to monetise.',
+    points: ['Jetpack Compose UI, MVVM', 'Firebase Auth & Firestore sync', 'Play Billing & AdMob', 'Play Store publishing'],
+    stack: ['Kotlin', 'Compose', 'Firebase'],
+  },
+  {
+    id: 'backend',
+    title: 'Backend & APIs',
+    icon: Server,
+    color: 'var(--accent-purple)',
+    pitch: 'Scalable services that stay reliable as your traffic grows.',
+    points: ['Microservices & event pipelines', 'Kafka, Redis caching, MySQL/Postgres', 'CI/CD with GitHub Actions', 'Logging & monitoring (Grafana)'],
+    stack: ['Java', 'Kafka', 'Redis', 'Docker'],
+  },
+  {
+    id: '3d',
+    title: 'Interactive 3D & WebGL',
+    icon: Box,
+    color: 'var(--accent-cyan)',
+    pitch: 'Memorable landing pages and visualisations that make people stop scrolling.',
+    points: ['Three.js / React Three Fiber scenes', 'GSAP scroll animations', 'Product & data visualisations', 'Smooth 60 FPS on real devices'],
+    stack: ['Three.js', 'R3F', 'GSAP'],
+  },
+  {
+    id: 'ai',
+    title: 'AI Integration',
+    icon: Sparkles,
+    color: 'var(--accent-green)',
+    pitch: 'Add useful AI features to your product — cloud or fully on-device.',
+    points: ['LLM-powered features & chat', 'On-device models (llama.cpp, ONNX)', 'Text-to-speech & document AI', 'Custom ML models from scratch'],
+    stack: ['LLMs', 'ONNX', 'Python'],
+  },
+  {
+    id: 'perf',
+    title: 'Performance & Bug Fixing',
+    icon: Gauge,
+    color: 'var(--accent-purple)',
+    pitch: 'Slow queries, crashes or messy code? I find the root cause and fix it.',
+    points: ['Profiling & query optimisation', 'Algorithmic speed-ups', 'Concurrency & race-condition fixes', 'Code reviews & refactoring'],
+    stack: ['C++', 'Java', 'SQL'],
+  },
+];

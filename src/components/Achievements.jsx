@@ -46,7 +46,19 @@ const Achievements = () => {
       }
     );
 
-    gsap.fromTo('.ach-metric-card', 
+    // Count-up animation for the numeric part of each metric (e.g. "#81", "2000+")
+    gsap.utils.toArray('.ach-count').forEach((el) => {
+      const [, prefix, num, suffix] = el.dataset.value.match(/^(\D*)(\d+)(\D*)$/) || [];
+      if (!num) return;
+      const counter = { v: 0 };
+      gsap.to(counter, {
+        v: Number(num), duration: 1.8, ease: 'power2.out',
+        scrollTrigger: { trigger: el, start: 'top 90%' },
+        onUpdate: () => { el.textContent = `${prefix}${Math.round(counter.v)}${suffix}`; },
+      });
+    });
+
+    gsap.fromTo('.ach-metric-card',
       { y: 30, opacity: 0 },
       {
         y: 0,
@@ -67,7 +79,7 @@ const Achievements = () => {
     <section id="achievements" className="section" ref={compRef}>
       <div className="reveal-title-ach" style={{ marginBottom: '4rem' }}>
          <h2 className="section-title" style={{ margin: 0 }}>
-           <span className="section-num">05 —</span>
+           <span className="section-num">07 —</span>
            <span className="text-gradient">ACHIEVEMENTS</span>
          </h2>
       </div>
@@ -89,8 +101,8 @@ const Achievements = () => {
             </div>
             
             <div style={{ margin: '15px 0' }}>
-              <div style={{ 
-                fontSize: '4rem', 
+              <div className="ach-count" data-value={ach.metric} style={{
+                fontSize: '4rem',
                 fontFamily: 'var(--font-heading)', 
                 fontWeight: '700', 
                 color: '#fff', 

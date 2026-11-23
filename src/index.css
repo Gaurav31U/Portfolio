@@ -217,3 +217,80 @@ body::after {
   box-shadow: 0 0 15px rgba(0, 240, 255, 0.2);
   transform: translateY(-2px);
 }
+
+/* ============ Freelance UI upgrades ============ */
+html { scroll-padding-top: 80px; }
+
+/* Cursor-follow spotlight on every cyber card */
+.card-cyber {
+  background:
+    radial-gradient(420px circle at var(--mx, -999px) var(--my, -999px), rgba(0, 240, 255, 0.07), transparent 45%),
+    rgba(8, 8, 12, 0.8);
+}
+
+/* Primary (filled) button variant */
+.glow-btn.primary {
+  background: linear-gradient(90deg, var(--accent-green), var(--accent-cyan));
+  color: #030303;
+  border-color: transparent;
+  font-weight: 600;
+  box-shadow: 0 0 20px rgba(0, 255, 156, 0.25);
+}
+.glow-btn.primary:hover { box-shadow: 0 0 35px rgba(0, 255, 156, 0.5); }
+.glow-btn svg { flex-shrink: 0; }
+
+.availability-badge {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 6px 14px 6px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(0, 255, 156, 0.25);
+  background: rgba(0, 255, 156, 0.06);
+  color: var(--accent-green);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.5px;
+}
+
+.section-lead {
+  color: var(--text-secondary);
+  font-size: 1.05rem;
+  max-width: 640px;
+  line-height: 1.7;
+  margin-top: 1rem;
+}
+
+.chip {
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.02);
+  color: var(--text-secondary);
+  padding: 8px 14px;
+  border-radius: 999px;
+  font-family: var(--font-heading);
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+.chip:hover { color: #fff; border-color: rgba(0, 240, 255, 0.4); }
+.chip.active {
+  color: #030303;
+  background: linear-gradient(90deg, var(--accent-green), var(--accent-cyan));
+  border-color: transparent;
+  font-weight: 600;
+}
+
+.tech-tag {
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.02);
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 0.72rem;
+  font-family: var(--font-mono);
+  color: #d5dde6;
+}
+
+:focus-visible { outline: 2px solid var(--accent-cyan); outline-offset: 3px; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}

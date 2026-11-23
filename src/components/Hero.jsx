@@ -6,8 +6,8 @@ const Hero = () => {
   return (
     <section id="home" className="hero">
       <div className="watermark-text" style={{ zIndex: 0 }}>ENGINEER</div>
-      
-      <div 
+
+      <div
         className="hero-content"
         style={{ zIndex: 2 }}
       >
@@ -15,14 +15,14 @@ const Hero = () => {
           <div className="rotating-border"></div>
           {/* Fallback to simple styled div if image not added */}
           <div className="profile-img" style={{ background: 'linear-gradient(45deg, #0a0a0a, #1a1a1a)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-             <FaGraduationCap size={80} color="#00ffff" />
+            <FaGraduationCap size={80} color="#00ffff" />
           </div>
         </div>
-        
+
         <h1 className="hero-title">
           Hi, I'm <span className="text-gradient">Gaurav Kumar</span>
         </h1>
-        
+
         <div className="hero-typewriter">
           <Typewriter
             words={['Full Stack Developer', 'Backend Engineer', 'Competitive Programmer']}
@@ -34,9 +34,9 @@ const Hero = () => {
             delaySpeed={1000}
           />
         </div>
-        
+
         <p style={{ color: 'var(--text-secondary)', maxWidth: '600px', marginTop: '10px' }}>
-          Final-year CS&E student at IIT (BHU). Over 2000 algorithmic problems solved. Passionate about building robust backend architectures and beautifully crafted digital experiences.
+          CS&E graduate from IIT (BHU) with an Integrated Dual Degree (IDD: B.Tech + M.Tech). Over 2000 algorithmic problems solved. Passionate about building robust backend architectures and beautifully crafted digital experiences.
         </p>
 
         <div style={{ display: 'flex', gap: '20px', marginTop: '30px' }}>

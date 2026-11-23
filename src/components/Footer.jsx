@@ -22,8 +22,8 @@ const Footer = () => {
           <span className="text-gradient">let's build</span>
           <span>something epic.</span>
         </h1>
-        <a href="mailto:gkxp1000@gmail.com" className="glow-btn" style={{ padding: '16px 40px', fontSize: '1.2rem', marginTop: '2rem' }}>
-          Start a Conversation
+        <a href="#contact" className="glow-btn primary" style={{ padding: '16px 40px', fontSize: '1.1rem', marginTop: '2rem' }}>
+          Start Your Project
         </a>
       </div>
 

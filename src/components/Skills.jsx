@@ -69,7 +69,7 @@ const Skills = () => {
     <section id="skills" className="section" ref={compRef}>
       <div className="reveal-title-skills" style={{ marginBottom: '4rem' }}>
         <h2 className="section-title" style={{ margin: 0 }}>
-          <span className="section-num">02 —</span>
+          <span className="section-num">06 —</span>
           <span className="text-gradient">ENGINEERING CORE</span>
         </h2>
       </div>

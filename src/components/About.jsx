@@ -71,7 +71,7 @@ const About = () => {
                 <span className="terminal-prompt">$</span> whoami
               </div>
               <div className="terminal-line" style={{ color: 'var(--accent-green)', marginBottom: '16px' }}>
-                gaurav_kumar (CS&E Dual Degree, IIT BHU)
+                gaurav_kumar (CS&E IDD Graduate, IIT BHU)
               </div>
               
               <div className="terminal-line">
@@ -81,7 +81,9 @@ const About = () => {
 {`{
   "name": "Gaurav Kumar",
   "education": "Indian Institute of Technology (BHU), Varanasi",
+  "degree": "Integrated Dual Degree (B.Tech + M.Tech)",
   "major": "Computer Science & Engineering",
+  "status": "Graduated",
   "cpi": "8.57 / 10.0",
   "focus": ["Scalable Systems", "Competitive Programming", "Full-stack Backend"]
 }`}
@@ -106,7 +108,7 @@ const About = () => {
             </div>
             <h3 style={{ fontSize: '1.6rem', fontFamily: 'var(--font-heading)', marginBottom: '15px', fontWeight: '600' }}>IIT BHU</h3>
             <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem', lineHeight: '1.6' }}>
-              Integrated Dual Degree (B.Tech + M.Tech) in Computer Science & Engineering. Final year candidate graduating with a strong foundation in systems engineering and algorithms.
+              Graduated with an Integrated Dual Degree (IDD: B.Tech + M.Tech) in Computer Science & Engineering. Built a strong foundation in systems engineering, distributed architectures, and algorithms.
             </p>
           </div>
           <div style={{ borderTop: '1px solid rgba(255, 255, 255, 0.05)', paddingTop: '15px', marginTop: '15px', display: 'flex', justifyContent: 'space-between' }}>
@@ -115,8 +117,12 @@ const About = () => {
               <div style={{ fontSize: '0.7rem', color: 'var(--text-secondary)', fontFamily: 'var(--font-mono)' }}>CPI / CGPA</div>
             </div>
             <div>
-              <div style={{ fontSize: '1.5rem', fontFamily: 'var(--font-heading)', fontWeight: 'bold', color: '#fff' }}>2026</div>
-              <div style={{ fontSize: '0.7rem', color: 'var(--text-secondary)', fontFamily: 'var(--font-mono)' }}>GRAD YEAR</div>
+              <div style={{ fontSize: '1.5rem', fontFamily: 'var(--font-heading)', fontWeight: 'bold', color: '#fff' }}>IDD</div>
+              <div style={{ fontSize: '0.7rem', color: 'var(--text-secondary)', fontFamily: 'var(--font-mono)' }}>B.TECH + M.TECH</div>
+            </div>
+            <div>
+              <div style={{ fontSize: '1.5rem', fontFamily: 'var(--font-heading)', fontWeight: 'bold', color: 'var(--accent-green)' }}>2026</div>
+              <div style={{ fontSize: '0.7rem', color: 'var(--text-secondary)', fontFamily: 'var(--font-mono)' }}>GRADUATED</div>
             </div>
           </div>
         </div>

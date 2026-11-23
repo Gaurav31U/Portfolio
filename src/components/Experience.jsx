@@ -63,7 +63,7 @@ const Experience = () => {
     <section id="experience" className="section" ref={compRef}>
       <div className="reveal-title-exp" style={{ marginBottom: '4rem' }}>
         <h2 className="section-title" style={{ margin: 0 }}>
-          <span className="section-num">04 —</span>
+          <span className="section-num">05 —</span>
           <span className="text-gradient">EXPERIENCE</span>
         </h2>
       </div>

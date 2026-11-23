@@ -4,6 +4,7 @@ import { Typewriter } from 'react-simple-typewriter';
 import { FaGithub, FaLinkedin, FaGraduationCap } from 'react-icons/fa';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
+import { ArrowRight } from 'lucide-react';
 
 // 3D Particle Field background
 function ParticleField({ count = 600, color = "#00f0ff", speed = 0.02 }) {
@@ -157,6 +158,10 @@ const AnimatedHero3D = () => {
       
       <div className="hero-split-content">
         <div className="hero-left-col">
+          <a href="#contact" className="availability-badge" style={{ textDecoration: 'none' }}>
+            <span className="status-dot"></span>
+            Available for freelance projects
+          </a>
           <div className="profile-container">
             <div className="rotating-border"></div>
             <div className="profile-img" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -181,15 +186,30 @@ const AnimatedHero3D = () => {
           </div>
           
           <p className="hero-description-p">
-            Final-year CS&E student at IIT (BHU). Solved 2000+ algorithmic problems. Dedicated to engineering robust backends, microservices, and immersive digital interfaces.
+            I build <strong style={{ color: '#fff' }}>fast web apps, Android apps and scalable backends</strong> that ship to real users. IIT (BHU) CS&E graduate (IDD: B.Tech + M.Tech) with 3 apps live on the Play Store, industry microservices experience and 2000+ algorithmic problems solved.
           </p>
 
-          <div style={{ display: 'flex', gap: '20px', marginTop: '20px', alignItems: 'center' }}>
-            <a href="#projects" className="glow-btn">EXPLORE PROJECTS</a>
+          <div className="hero-cta-row">
+            <a href="#contact" className="glow-btn primary">START A PROJECT <ArrowRight size={16} style={{ marginLeft: '10px' }} /></a>
+            <a href="#projects" className="glow-btn">VIEW MY WORK</a>
             <div style={{ display: 'flex', gap: '12px' }}>
               <a href="https://github.com/Gaurav31U" target="_blank" rel="noopener noreferrer" className="glow-icon-btn" aria-label="GitHub"><FaGithub size={18} /></a>
               <a href="https://linkedin.com/in/gaurav31u" target="_blank" rel="noopener noreferrer" className="glow-icon-btn" aria-label="LinkedIn"><FaLinkedin size={18} /></a>
             </div>
+          </div>
+
+          <div className="hero-stats">
+            {[
+              ['11+', 'Projects built'],
+              ['3', 'Apps on Play Store'],
+              ['2', 'Industry internships'],
+              ['1775', 'Codeforces rating'],
+            ].map(([value, label]) => (
+              <div key={label} className="hero-stat">
+                <div className="hero-stat-value">{value}</div>
+                <div className="hero-stat-label">{label}</div>
+              </div>
+            ))}
           </div>
         </div>
       </div>
@@ -240,7 +260,27 @@ const AnimatedHero3D = () => {
           font-family: var(--font-heading);
           text-shadow: 0 2px 4px rgba(0,0,0,0.8);
         }
+        .hero-cta-row {
+          display: flex; gap: 14px; margin-top: 10px; align-items: center; flex-wrap: wrap;
+        }
+        .hero-stats {
+          display: grid; grid-template-columns: repeat(4, auto); gap: 32px;
+          margin-top: 18px; padding-top: 22px;
+          border-top: 1px solid rgba(255, 255, 255, 0.06);
+        }
+        .hero-stat-value {
+          font-family: var(--font-heading); font-size: 1.8rem; font-weight: 700; line-height: 1;
+          background: linear-gradient(135deg, #fff, var(--accent-cyan));
+          -webkit-background-clip: text; background-clip: text; color: transparent;
+        }
+        .hero-stat-label {
+          font-family: var(--font-mono); font-size: 0.68rem; color: var(--text-secondary);
+          margin-top: 6px; text-transform: uppercase; letter-spacing: 0.5px;
+        }
+        .hero-left-col .profile-container { width: 96px; height: 96px; margin-bottom: 0; }
         @media (max-width: 991px) {
+          .hero-cta-row { justify-content: center; }
+          .hero-stats { grid-template-columns: repeat(2, auto); gap: 22px 40px; justify-content: center; }
           .hero-split-container {
             padding: 120px 24px 60px;
             flex-direction: column;

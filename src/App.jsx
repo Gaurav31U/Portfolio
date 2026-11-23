@@ -3,11 +3,15 @@ import Navbar from './components/Navbar';
 import AnimatedHero3D from './components/AnimatedHero3D';
 const CircuitBoard = lazy(() => import('./components/CircuitBoard'));
 import About from './components/About';
+import Services from './components/Services';
 import Skills from './components/Skills';
 import Experience from './components/Experience';
 import Projects from './components/Projects';
+import Process from './components/Process';
 import Achievements from './components/Achievements';
+import Contact from './components/Contact';
 import Footer from './components/Footer';
+import GlobalFX from './components/GlobalFX';
 import Particles from "@tsparticles/react";
 import { loadSlim } from "@tsparticles/slim";
 import './index.css';
@@ -24,6 +28,8 @@ function App() {
 
   return (
     <div className="app-container">
+      <GlobalFX />
+
       {/* Global Background Visualization */}
       <Particles
         id="tsparticles"
@@ -31,9 +37,9 @@ function App() {
         options={{
           background: { color: { value: "transparent" } },
           fpsLimit: 60,
-          interactivity: { 
-            events: { onHover: { enable: true, mode: "grab" } }, 
-            modes: { grab: { distance: 150, links: { opacity: 0.8 } } } 
+          interactivity: {
+            events: { onHover: { enable: true, mode: "grab" } },
+            modes: { grab: { distance: 150, links: { opacity: 0.8 } } }
           },
           particles: {
             color: { value: "#00ffff" },
@@ -60,12 +66,14 @@ function App() {
         <Navbar />
         <main>
           <AnimatedHero3D />
-
           <About />
-          <Skills />
+          <Services />
           <Projects />
+          <Process />
           <Experience />
+          <Skills />
           <Achievements />
+          <Contact />
         </main>
         <Footer />
       </div>
