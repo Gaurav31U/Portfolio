@@ -1,10 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Mail, Copy, Check, Send, Clock, MapPin } from 'lucide-react';
+import { Mail, Copy, Check, Send, Clock, MapPin, CheckCircle2, Loader2 } from 'lucide-react';
 import { FaGithub, FaLinkedin } from 'react-icons/fa';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
 import { services } from './servicesData';
+import { isGoogleFormConfigured, submitToGoogleForm } from './googleFormConfig';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -30,7 +31,8 @@ const Contact = () => {
   const [timeline, setTimeline] = useState('');
   const [form, setForm] = useState({ name: '', email: '', message: '' });
   const [copied, setCopied] = useState(false);
-  const [sent, setSent] = useState(false);
+  const [status, setStatus] = useState('idle'); // idle | sending | success | error | mailto
+  const honeypot = useRef(null);
   const istTime = useIstClock();
 
   // "Request this" buttons in Services preselect a project type
@@ -64,8 +66,7 @@ const Contact = () => {
     }
   };
 
-  const onSubmit = (e) => {
-    e.preventDefault();
+  const openMailto = () => {
     const subject = `Project inquiry${types.length ? ` — ${types.join(', ')}` : ''}${form.name ? ` from ${form.name}` : ''}`;
     const body = [
       `Hi Gaurav,`,
@@ -80,7 +81,32 @@ const Contact = () => {
       `Timeline: ${timeline || 'Not specified'}`,
     ].join('\n');
     window.location.href = `mailto:${EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    setSent(true);
+  };
+
+  const resetForm = () => {
+    setForm({ name: '', email: '', message: '' });
+    setTypes([]); setBudget(''); setTimeline('');
+    setStatus('idle');
+  };
+
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    if (honeypot.current?.value) return; // bot filled the hidden field
+    if (!isGoogleFormConfigured()) { openMailto(); setStatus('mailto'); return; }
+    setStatus('sending');
+    try {
+      await submitToGoogleForm({
+        name: form.name,
+        email: form.email,
+        projectType: types.join(', ') || 'Not specified',
+        budget: budget || 'Not specified',
+        timeline: timeline || 'Not specified',
+        message: form.message,
+      });
+      setStatus('success');
+    } catch {
+      setStatus('error');
+    }
   };
 
   return (
@@ -126,7 +152,17 @@ const Contact = () => {
           </div>
         </aside>
 
+        {status === 'success' ? (
+          <div className="contact-col card-cyber contact-form contact-success" role="status" aria-live="polite">
+            <div className="success-icon"><CheckCircle2 size={34} /></div>
+            <h3>Brief received{form.name ? `, ${form.name.split(' ')[0]}` : ''}!</h3>
+            <p>Thanks for reaching out. I'll review your project and reply to <strong>{form.email}</strong> within 24 hours.</p>
+            <button type="button" className="glow-btn" onClick={resetForm}>SEND ANOTHER BRIEF</button>
+          </div>
+        ) : (
         <form className="contact-col card-cyber contact-form" onSubmit={onSubmit}>
+          {/* Honeypot: hidden from people, bots tend to fill it */}
+          <input ref={honeypot} type="text" name="company_website" tabIndex={-1} autoComplete="off" aria-hidden="true" className="hp-field" />
           <fieldset>
             <legend>What do you need?</legend>
             <div className="chip-row">
@@ -178,14 +214,21 @@ const Contact = () => {
           </label>
 
           <div style={{ display: 'flex', alignItems: 'center', gap: '16px', flexWrap: 'wrap' }}>
-            <button type="submit" className="glow-btn primary" style={{ padding: '14px 30px' }}>
-              <Send size={16} style={{ marginRight: '10px' }} /> SEND PROJECT BRIEF
+            <button type="submit" className="glow-btn primary" style={{ padding: '14px 30px' }} disabled={status === 'sending'}>
+              {status === 'sending'
+                ? <><Loader2 size={16} className="spin" style={{ marginRight: '10px' }} /> SENDING…</>
+                : <><Send size={16} style={{ marginRight: '10px' }} /> SEND PROJECT BRIEF</>}
             </button>
-            <span className="form-hint">
-              {sent ? 'Your email app should have opened with the brief ready to send.' : 'Opens your email app with everything pre-filled.'}
+            <span className={`form-hint ${status === 'error' ? 'error' : ''}`} aria-live="polite">
+              {status === 'error' && <>Couldn't send — check your connection, or email <a href={`mailto:${EMAIL}`}>{EMAIL}</a>.</>}
+              {status === 'mailto' && 'Your email app should have opened with the brief ready to send.'}
+              {(status === 'idle' || status === 'sending') && (isGoogleFormConfigured()
+                ? 'Goes straight to my inbox. No sign-up needed.'
+                : 'Opens your email app with everything pre-filled.')}
             </span>
           </div>
         </form>
+        )}
       </div>
 
       <style>{`
@@ -227,6 +270,23 @@ const Contact = () => {
           outline: none; border-color: var(--accent-cyan); box-shadow: 0 0 0 3px rgba(0, 240, 255, 0.12);
         }
         .form-hint { color: var(--text-secondary); font-size: 0.82rem; }
+        .form-hint.error { color: #ff6b81; }
+        .form-hint a { color: var(--accent-cyan); }
+        .hp-field { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+        .glow-btn:disabled { opacity: 0.7; cursor: wait; transform: none; }
+        .spin { animation: rotate 1s linear infinite; }
+        .contact-success { align-items: center; justify-content: center; text-align: center; min-height: 420px; }
+        .contact-success h3 { font-family: var(--font-heading); font-size: 1.8rem; font-weight: 600; }
+        .contact-success p { color: var(--text-secondary); max-width: 440px; line-height: 1.7; }
+        .contact-success strong { color: #fff; }
+        .success-icon {
+          width: 72px; height: 72px; border-radius: 50%;
+          display: flex; align-items: center; justify-content: center; color: #030303;
+          background: linear-gradient(135deg, var(--accent-green), var(--accent-cyan));
+          box-shadow: 0 0 40px rgba(0, 255, 156, 0.4);
+          animation: successPop 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        @keyframes successPop { from { transform: scale(0.4); opacity: 0; } to { transform: scale(1); opacity: 1; } }
         @media (max-width: 900px) {
           .contact-grid { grid-template-columns: 1fr; }
           .form-row { grid-template-columns: 1fr; }
